@@ -1,0 +1,116 @@
+/* Leaflet CSS — must come before @tailwind */
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e8c84a;
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content-wrapper {
+  background: #16213e;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+.leaflet-popup-tip {
+  background: #16213e;
+}
+.leaflet-popup-content {
+  color: #fff;
+  margin: 12px 16px;
+}
+.leaflet-container {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Fix leaflet z-index with framer motion */
+.leaflet-pane {
+  z-index: 1 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 2 !important;
+}
+
+/* ── Keyframes globais ────────────────────────────────────────────────────── */
+
+/* Estrelas: pisca suavemente variando opacidade e escala */
+@keyframes twinkle {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.2; transform: scale(0.55); }
+}
+
+/*
+  Cometa com efeito de "desenho/apagamento":
+
+  clip-path: inset(0 R 0 0)
+    R = 100% → invisível   |   R = 0% → totalmente visível
+
+  O gradiente é branco (esquerda = cabeça) → transparente (direita = cauda).
+
+  IMPORTANTE: animation-timing-function: linear em cada stop garante velocidade
+  constante de -250vw por 100% do ciclo durante a fase visível (0-52%).
+  As posições são calculadas nessa taxa uniforme:
+    slope = 130vw / 52% ≈ 250vw por 100%
+
+    0% :  0vw
+    8% :  8% × 250 =  20vw
+   42% : 42% × 250 = 105vw
+   52% : 52% × 250 = 130vw
+
+  Com movimento constante e clip-path animando junto, o cometa se move
+  continuamente enquanto é desenhado/apagado — sem parar.
+
+  step-end em 52% faz o reset de posição acontecer instantaneamente
+  (o cometa já está invisível nesse ponto, então não há flash).
+
+  Fase  0→ 8%: draw   — cabeça aparece, cauda cresce, cometa em movimento
+  Fase  8→42%: voo    — totalmente visível, cruza a tela
+  Fase 42→52%: erase  — cauda some, cabeça some por último, ainda em movimento
+  Fase 52→53%: reset  — volta ao início invisível
+  Fase 53→100%: pausa — aguarda próxima aparição
+*/
+@keyframes comet {
+  0% {
+    transform: translateX(0);
+    clip-path: inset(0 100% 0 0);
+    animation-timing-function: linear;
+  }
+  8% {
+    transform: translateX(-20vw);
+    clip-path: inset(0 0% 0 0);
+    animation-timing-function: linear;
+  }
+  42% {
+    transform: translateX(-105vw);
+    clip-path: inset(0 0% 0 0);
+    animation-timing-function: linear;
+  }
+  52% {
+    transform: translateX(-130vw);
+    clip-path: inset(0 100% 0 0);
+    animation-timing-function: step-end;
+  }
+  53%  { transform: translateX(0); clip-path: inset(0 100% 0 0); }
+  100% { transform: translateX(0); clip-path: inset(0 100% 0 0); }
+}
