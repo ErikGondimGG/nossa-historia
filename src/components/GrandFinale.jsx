@@ -253,7 +253,7 @@ export default function GrandFinale() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
+          transition={{ delay: 16, duration: 1 }}
           className="font-display text-4xl text-white text-center"
         >
           {finale.reveal_text}
