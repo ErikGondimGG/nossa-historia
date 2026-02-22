@@ -28,6 +28,15 @@ export const places = [
   },
   {
     id: 4,
+    name: "Minha Paz",
+    lat: -19.73228004899725,
+    lng: -47.933817159492584,
+    image: "/images/minha-paz.png",
+    message:
+      "A viagem que provou que a gente pode fazer tudo se formos juntos, mesmo que seja dividido em 12x sem juros.",
+  },
+  {
+    id: 5,
     name: "Nossa Viagem",
     lat: -17.73800436614526,
     lng: -48.62709302498588,
@@ -36,7 +45,7 @@ export const places = [
       "A viagem que provou que a gente pode fazer tudo se formos juntos, mesmo que seja dividido em 12x sem juros.",
   },
   {
-    id: 5,
+    id: 6,
     name: "Nosso Lugar Secreto",
     lat: -19.739833998170724,
     lng: -47.94289378773235,

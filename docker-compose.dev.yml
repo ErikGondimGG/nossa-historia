@@ -1,0 +1,13 @@
+services:
+  nossa-historia:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:5173"
+    volumes:
+      - .:/app                  # monta o código-fonte para hot reload
+      - /app/node_modules       # preserva node_modules do container
+    environment:
+      - VITE_POLLING=true       # ativa polling no Vite (necessário no WSL2/Docker)
+    restart: unless-stopped

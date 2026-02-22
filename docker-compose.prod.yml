@@ -1,6 +1,8 @@
 services:
   nossa-historia:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     ports:
       - "3000:80"
     restart: unless-stopped
